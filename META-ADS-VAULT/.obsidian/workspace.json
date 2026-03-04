@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04-OPERATIONAL-CONTROL/24-Marketing-Metrics-Analysis-Agent.md",
+                "file": "05-REFERENCE/Introduction-Learning-System-Philosophy.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "24-Marketing-Metrics-Analysis-Agent"
+              "title": "Introduction-Learning-System-Philosophy"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04-OPERATIONAL-CONTROL/24-Marketing-Metrics-Analysis-Agent.md",
+                "file": "05-REFERENCE/Introduction-Learning-System-Philosophy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 24-Marketing-Metrics-Analysis-Agent"
+              "title": "Backlinks for Introduction-Learning-System-Philosophy"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04-OPERATIONAL-CONTROL/24-Marketing-Metrics-Analysis-Agent.md",
+                "file": "05-REFERENCE/Introduction-Learning-System-Philosophy.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 24-Marketing-Metrics-Analysis-Agent"
+              "title": "Outgoing links from Introduction-Learning-System-Philosophy"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "04-OPERATIONAL-CONTROL/24-Marketing-Metrics-Analysis-Agent.md",
+                "file": "05-REFERENCE/Introduction-Learning-System-Philosophy.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 24-Marketing-Metrics-Analysis-Agent"
+              "title": "Outline of Introduction-Learning-System-Philosophy"
             }
           }
         ]
@@ -185,8 +185,8 @@
   },
   "active": "372ac475806e4931",
   "lastOpenFiles": [
-    "04-OPERATIONAL-CONTROL/23-LTV-and-Unit-Economics.md",
     "04-OPERATIONAL-CONTROL/24-Marketing-Metrics-Analysis-Agent.md",
+    "04-OPERATIONAL-CONTROL/23-LTV-and-Unit-Economics.md",
     "02-STRUCTURAL-STRATEGY/07-Immutable-Global-Variables.md",
     "05-REFERENCE/Glossary-and-Acronyms.md",
     "05-REFERENCE/Introduction-Learning-System-Philosophy.md",

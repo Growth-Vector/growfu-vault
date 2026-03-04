@@ -4,9 +4,7 @@
 
 The **Intelligent Variable Generator (IVG)** is a sophisticated AI-powered system that transforms minimal user inputs (company description, brand info, product details) into complete, framework-compliant definitions of the 9 Immutable Global Variables required for GrowFu v3 campaigns.
 
-The system combines deep automated research, multi-LLM analysis, strict validation logic, and interactive refinement to produce expert-quality variable definitions that would normally require deep GrowFu expertise and 6-8 hours of strategic work.
-
-**Time Reduction**: 6-8 hours manual → 45-60 minutes with IVG (85%+ time savings)
+The system combines deep automated research, multi-LLM analysis, strict validation logic, and interactive refinement to produce expert-quality variable definitions that would normally require deep expertise and hours of strategic work.
 
 ---
 
@@ -115,10 +113,9 @@ The system combines deep automated research, multi-LLM analysis, strict validati
 
 ### 1.1 Research Orchestrator
 
-**Technology**: Python orchestration layer with async/await for parallel research
-
 **Responsibilities**:
-- Coordinate 4 parallel research agents
+
+- Coordinate parallel research agents
 - Manage research depth/breadth tradeoffs
 - Consolidate findings into structured knowledge graph
 - Track evidence provenance for all claims
@@ -150,6 +147,7 @@ The system combines deep automated research, multi-LLM analysis, strict validati
    - Identify: What user behavior actually changes (critical for OF)
 
 **Output**: Company Intelligence Profile
+
 ```json
 {
   "value_propositions": ["..."],
@@ -165,7 +163,7 @@ The system combines deep automated research, multi-LLM analysis, strict validati
     "features": ["..."],
     "behavioral_outcomes": ["what users DO differently"]
   },
-  "evidence": [{"claim": "...", "source": "url", "quote": "..."}]
+  "evidence": [{ "claim": "...", "source": "url", "quote": "..." }]
 }
 ```
 
@@ -213,6 +211,7 @@ The system combines deep automated research, multi-LLM analysis, strict validati
    - Top performing content
 
 **Output**: Competitive Intelligence Profile
+
 ```json
 {
   "competitors": [
@@ -223,7 +222,7 @@ The system combines deep automated research, multi-LLM analysis, strict validati
       "emotional_axis_detected": "from X to Y",
       "cta_intensity_range": "passive|moderate|aggressive",
       "brand_role_inference": "above|beside|behind",
-      "ad_examples": [{"text": "...", "image_url": "...", "analysis": "..."}]
+      "ad_examples": [{ "text": "...", "image_url": "...", "analysis": "..." }]
     }
   ],
   "market_gaps": ["opportunities not addressed by competitors"],
@@ -253,6 +252,7 @@ The system combines deep automated research, multi-LLM analysis, strict validati
    - Common rejection/avoidance behaviors
 
 **Output**: Audience Intelligence Profile
+
 ```json
 {
   "observable_s0_signals": {
@@ -279,6 +279,7 @@ The system combines deep automated research, multi-LLM analysis, strict validati
 **Technology**: Claude Opus 4.6 (best reasoning model)
 
 **Process**:
+
 1. Ingest all 4 research agent outputs
 2. Cross-reference and validate findings
 3. Identify contradictions and resolve with evidence weight
@@ -294,6 +295,7 @@ The system combines deep automated research, multi-LLM analysis, strict validati
 ### Architecture: 9 Specialized Generator Modules
 
 Each variable has a dedicated generator following this pattern:
+
 ```
 Input: Synthesized Intelligence Base + Framework Rules + Variable-Specific Constraints
 Process: Multi-step reasoning with explicit constraint checking
@@ -305,16 +307,19 @@ Output: Variable definition + reasoning + evidence + alternatives
 ### 2.1 PS (Problem Space) Generator
 
 **Framework Requirements** (from [File 7](./META-ADS-VAULT/02-STRUCTURAL-STRATEGY/07-Immutable-Global-Variables.md)):
+
 - Must be a recurring human error (cognitive, emotional, or behavioral)
 - Must be OBSERVABLE, not psychological
 - Must identify structural cause (not blame user)
 - Must be expressible as: 1 sentence + 3 observable symptoms (behaviors)
 
 **LLM Strategy**:
+
 - **Model**: Claude Opus 4.6 (best reasoning)
 - **Approach**: Multi-shot prompting with framework requirements embedded
 
 **Prompt Template**:
+
 ```xml
 <context>
 You are a GrowFu strategist expert defining Problem Space (PS) for a campaign.
@@ -345,6 +350,7 @@ For each:
 ```
 
 **Validation Logic** (hard-coded Python):
+
 ```python
 def validate_ps(ps_definition):
     errors = []
@@ -376,16 +382,19 @@ def validate_ps(ps_definition):
 ### 2.2 OF (Outcome Function) Generator
 
 **Framework Requirements**:
+
 - NOT aspiration - observable state transition
 - Describe what user DOES differently after intervention
 - Express as change in behavior, criteria, or action
 - Must be measurable/observable
 
 **Critical Example**:
+
 - NOT: "users will feel confident"
 - YES: "users will evaluate options using a defined framework rather than guessing"
 
 **LLM Prompt Template**:
+
 ```xml
 <context>
 You are defining Outcome Function (OF) - the observable behavior change.
@@ -418,6 +427,7 @@ Generate 3 alternative OF definitions that:
 ```
 
 **Validation Logic**:
+
 ```python
 def validate_of(of_definition):
     errors = []
@@ -442,16 +452,19 @@ def validate_of(of_definition):
 ### 2.3 BR (Brand Role) Generator
 
 **Framework Requirements**:
+
 - **Direction**: Unidirectional / Bidirectional
 - **Intensity**: Low / Medium / High
 - **Position**: Above (authority) / Beside (peer/guide) / Behind (enabler)
 
 **Implications**:
+
 - Position "Above" (authority) → cannot use peer tone
 - Position "Beside" (peer) → cannot use authoritative tone
 - Position "Behind" (enabler) → user is hero, brand is platform
 
 **LLM Prompt Template**:
+
 ```xml
 <context>
 You are defining Brand Role (BR) - the functional brand-user relationship.
@@ -493,12 +506,14 @@ Determine the appropriate BR with:
 ### 2.4 CS (Cognitive Stage) Generator
 
 **Framework Requirements**:
+
 - Choose ONE stage: Exploration → Identification → Validation → Decision
 - Stage determines: objective, optimization event, CTA range, targeting
 - Must match where users actually are (not aspiration)
 - Must ensure sufficient signal volume (~50 events/week)
 
 **Stage Mapping**:
+
 - **Exploration**: Awareness | Event: ThruPlay/VV | CTA: Passive
 - **Identification**: Recognition | Event: LPV | CTA: Informational
 - **Validation**: Trust | Event: Lead | CTA: Commitment signal
@@ -507,6 +522,7 @@ Determine the appropriate BR with:
 **Critical Rule**: Never skip stages. If users can't consistently perform an action, don't optimize for it.
 
 **Validation Logic**:
+
 ```python
 def validate_cs(cs_definition, budget_estimate):
     errors = []
@@ -540,11 +556,13 @@ def validate_cs(cs_definition, budget_estimate):
 ### 2.5 VE (Value Expression Type) Generator
 
 **Framework Requirements**:
+
 - **Closed set**: INSIGHT / VALIDATION / FRAMEWORK / SYSTEM
 - **One per campaign** (NEVER mix)
 - Must align with stage
 
 **Mapping**:
+
 - **INSIGHT**: Reframes the problem (Exploration)
 - **VALIDATION**: Normalizes the error (Exploration/Identification)
 - **FRAMEWORK**: Organizes the problem (Identification)
@@ -557,16 +575,19 @@ def validate_cs(cs_definition, budget_estimate):
 ### 2.6 EA (Emotional Axis) Generator
 
 **Framework Requirements**:
+
 - Format: [From State] → [To State]
 - One per campaign (never mixed)
 - Common axes: confusion→clarity, insecurity→confidence, overwhelm→control
 
 **Key Distinction**:
+
 - **EA** is the EMOTIONAL journey
 - **OF** is the BEHAVIORAL change
 - They should be complementary
 
 **Example**:
+
 - EA: confusion → clarity (emotional)
 - OF: Users evaluate options using a framework rather than guessing (behavioral)
 
@@ -575,6 +596,7 @@ def validate_cs(cs_definition, budget_estimate):
 ### 2.7 AL (Abstraction Level) Generator
 
 **Framework Requirements**:
+
 - High / Medium / Low
 - Ads should be Medium or Low (not High)
 - Early stage (Exploration) can be more abstract
@@ -585,15 +607,18 @@ def validate_cs(cs_definition, budget_estimate):
 ### 2.8 CTA-R (CTA Intensity Range) Generator
 
 **Framework Requirements**:
+
 - Constrained by: **Stage (dominant)**, Brand Role, Trust level
 
 **Per-Stage Ranges**:
+
 - **Exploration**: Passive/curiosity ("See how it works")
 - **Identification**: Informational ("Learn more", "Discover")
 - **Validation**: Commitment ("Register", "Get access")
 - **Decision**: Action ("Buy", "Join", "Start")
 
 **Output Format**:
+
 ```json
 {
   "minimum_intensity": "softest acceptable CTA",
@@ -610,6 +635,7 @@ def validate_cs(cs_definition, budget_estimate):
 ### 2.9 SCR (Semantic Consistency Rules) Generator
 
 **Framework Requirements**:
+
 - **Core promise**: Must appear in all creatives
 - **Required language**: Specific words/phrases to always use
 - **Forbidden claims**: What cannot be promised
@@ -618,6 +644,7 @@ def validate_cs(cs_definition, budget_estimate):
 **Purpose**: Prevent semantic variation that destroys learning
 
 **LLM Prompt includes**:
+
 - Brand language patterns from research
 - Competitor claims to differentiate from
 - Regulatory constraints for industry
@@ -630,6 +657,7 @@ def validate_cs(cs_definition, budget_estimate):
 ### 3.1 Hard Constraint Validation
 
 Each variable's output is validated against:
+
 1. **Structural requirements** (format, required fields)
 2. **Framework compliance** (behavioral vs psychological, observable vs aspirational)
 3. **Cross-variable consistency** (do variables work together?)
@@ -678,6 +706,7 @@ class ConsistencyValidator:
 ### 3.3 System Identity Rule Check
 
 **Critical Validation** (from [File 7](./META-ADS-VAULT/02-STRUCTURAL-STRATEGY/07-Immutable-Global-Variables.md)):
+
 > If PS, OF, or BR change, it is not an iteration. It is another system.
 
 Validates that PS, OF, BR form ONE coherent system identity.
@@ -753,6 +782,7 @@ Proceed to User Interaction
 **Approach**: Present one variable at a time, grouped logically
 
 **Groups**:
+
 1. **System Identity** (PS, OF, BR) - most critical, lock these first
 2. **Campaign Configuration** (CS, VE, EA, AL, CTA-R) - dependent on system identity
 3. **Semantic Rules** (SCR) - derived from all above
@@ -789,6 +819,7 @@ Proceed to User Interaction
 ### 5.3 Interactive Refinement Options
 
 **User Actions**:
+
 1. **Accept**: Lock variable and proceed
 2. **See Alternatives**: View 2-3 alternative definitions
 3. **Refine**: Provide feedback, system regenerates
@@ -803,6 +834,7 @@ Proceed to User Interaction
 Complete 22-field Campaign Definition Sheet in [File 22](./META-ADS-VAULT/04-OPERATIONAL-CONTROL/22-Master-Checklists-and-Execution-Templates.md) format:
 
 **Sections**:
+
 1. System Identity (PS, OF, BR)
 2. Campaign Configuration (CS, VE, EA, AL, CTA-R)
 3. Semantic Rules (SCR)
@@ -813,6 +845,7 @@ Complete 22-field Campaign Definition Sheet in [File 22](./META-ADS-VAULT/04-OPE
 ### 6.2 Evidence Pack
 
 Separate document with:
+
 - Research summary from all 4 agents
 - Evidence trail (every claim → source)
 - Confidence scores
@@ -822,6 +855,7 @@ Separate document with:
 ### 6.3 Next Steps Guide
 
 Automatic generation of action plan:
+
 1. Review and approve Campaign Definition Sheet
 2. User State Definition (S0/S1)
 3. Campaign Architecture Planning
@@ -836,11 +870,12 @@ Automatic generation of action plan:
 
 Validate that the campaign defined by IVG variables is economically viable before spending any budget. This prevents unprofitable campaigns from launching by comparing estimated CPA against viable CAC ceiling based on LTV economics.
 
-**Key Question Answered**: *"Is this campaign profitable?"* (not just "Is this campaign performing well?")
+**Key Question Answered**: _"Is this campaign profitable?"_ (not just "Is this campaign performing well?")
 
 ### Integration Point
 
 **Data Flow**:
+
 ```
 Campaign Definition Sheet (IVG Output)
     ↓
@@ -887,16 +922,19 @@ MMAA Pre-Launch Viability Analyzer
 Supports three calculation methods:
 
 **Method A: Cohort Projection** (best for subscription/SaaS)
+
 - Input: ARPU, Gross Margin %, Churn Rate, Time Horizon
 - Formula: `LTV = ARPU × Margin × (1 / Churn)`
 - Example: $50/mo × 75% margin × (1 / 0.05 monthly churn) = $750 LTV
 
 **Method B: First-Year Proxy** (for e-commerce)
+
 - Input: AOV (Average Order Value), Purchase Frequency, Margin %
 - Formula: `LTV = AOV × Frequency × Margin`
 - Example: $150 AOV × 4 purchases/year × 75% margin = $450 LTV
 
 **Method C: Industry Benchmark** (fallback)
+
 - Input: Vertical, Price Point
 - Uses industry standards database
 - Example: B2B SaaS at $50/month → estimated $600-900 LTV
@@ -908,6 +946,7 @@ Supports three calculation methods:
 #### 2. Viable CAC Ceiling Calculator
 
 **Formula**:
+
 ```python
 base_ceiling = ltv_estimate * safety_margin  # safety_margin = 0.30 to 0.50
 
@@ -922,6 +961,7 @@ viable_cac_ceiling = base_ceiling * confidence_adjustment[ltv_confidence]
 ```
 
 **Example Calculation**:
+
 - LTV: $450
 - Safety Margin: 40% (moderate conservatism)
 - Confidence: 6/10 (estimated, not historical)
@@ -931,11 +971,13 @@ viable_cac_ceiling = base_ceiling * confidence_adjustment[ltv_confidence]
 - **Result: Viable CAC Ceiling = $162**
 
 **Why Safety Margin?**
+
 - Accounts for unknowns in LTV calculation
 - Provides buffer for learning phase variance
 - Ensures sustainable unit economics (prevents break-even campaigns)
 
 **Why Confidence Adjustment?**
+
 - Reduces ceiling if LTV is speculative
 - Historical data gets no penalty (1.0 multiplier)
 - Protects against overconfident estimates
@@ -948,14 +990,15 @@ Uses **CS (Cognitive Stage)** from IVG variables to estimate expected CPA based 
 
 **Stage-Specific Benchmarks** (B2B SaaS example):
 
-| CS Stage | Optimization Event | Typical CPA Range | Stage Multiplier |
-|----------|-------------------|-------------------|------------------|
-| Exploration | ThruPlay / Video Views | $15-$40 | 1.0 (baseline) |
-| Identification | LPV (Landing Page Views) | $60-$120 | 1.5-2.0 |
-| Validation | Lead | $80-$180 | 2.0-3.0 |
-| Decision | Purchase / Value | $150-$400+ | 4.0-8.0 |
+| CS Stage       | Optimization Event       | Typical CPA Range | Stage Multiplier |
+| -------------- | ------------------------ | ----------------- | ---------------- |
+| Exploration    | ThruPlay / Video Views   | $15-$40           | 1.0 (baseline)   |
+| Identification | LPV (Landing Page Views) | $60-$120          | 1.5-2.0          |
+| Validation     | Lead                     | $80-$180          | 2.0-3.0          |
+| Decision       | Purchase / Value         | $150-$400+        | 4.0-8.0          |
 
 **Formula**:
+
 ```python
 expected_cpa = median_cpa_for_industry_and_stage * competitive_density_factor
 
@@ -966,11 +1009,13 @@ expected_cpa = median_cpa_for_industry_and_stage * competitive_density_factor
 ```
 
 **Integration with File 19** (Competitive Density & Marginal CPA):
+
 - MMAA queries competitive density data for the industry vertical
 - Adjusts expected CPA upward if market is saturated
 - Typical adjustment: 1.0 (low competition) to 1.5 (Q4 spike, high saturation)
 
 **Example**:
+
 - Industry: B2B SaaS
 - CS: Identification (LPV)
 - Median CPA: $80
@@ -984,11 +1029,11 @@ expected_cpa = median_cpa_for_industry_and_stage * competitive_density_factor
 
 **Decision Matrix**:
 
-| Estimated CPA vs. Viable Ceiling | Utilization | Status | Action |
-|----------------------------------|-------------|--------|--------|
-| < 50% of ceiling | < 50% | **GO** ✓ | Green light - proceed with confidence |
-| 50-80% of ceiling | 50-80% | **CAUTION** ⚠️ | Yellow light - proceed with conservative budget + close monitoring |
-| > 80% of ceiling | > 80% | **NO-GO** ✗ | Red light - recommend pivot or variable adjustment |
+| Estimated CPA vs. Viable Ceiling | Utilization | Status         | Action                                                             |
+| -------------------------------- | ----------- | -------------- | ------------------------------------------------------------------ |
+| < 50% of ceiling                 | < 50%       | **GO** ✓       | Green light - proceed with confidence                              |
+| 50-80% of ceiling                | 50-80%      | **CAUTION** ⚠️ | Yellow light - proceed with conservative budget + close monitoring |
+| > 80% of ceiling                 | > 80%       | **NO-GO** ✗    | Red light - recommend pivot or variable adjustment                 |
 
 **Example Viability Assessment**:
 
@@ -1036,11 +1081,13 @@ expected_cpa = median_cpa_for_industry_and_stage * competitive_density_factor
 **Why LLM vs. Rule Engine?**
 
 Viability assessment requires **context-dependent judgment** beyond simple thresholds:
+
 - Same 75% utilization could be **GO** (high LTV confidence, early-stage campaign) or **CAUTION** (low confidence, competitive industry)
 - LLMs synthesize multiple factors: LTV confidence, cognitive stage, industry dynamics, competitive density, learning phase status
 - Natural language reasoning is more actionable than simple "Status: CAUTION (75% utilization)"
 
 **Prompt Template**:
+
 ```xml
 You are a GrowFu viability analyst. Synthesize the following unit economics data
 into a clear viability assessment with reasoning.
@@ -1099,6 +1146,7 @@ If MMAA returns **NO-GO**, it suggests variable adjustments to improve economic 
    - Tighten audience definition
 
 **Example NO-GO Scenario**:
+
 ```
 Decision stage CPA: $400 (expected)
 Viable CAC Ceiling: $350 (LTV $1,000 × 35%)
@@ -1115,6 +1163,7 @@ Recommendations:
 ### User Experience Flow
 
 **Step 1: IVG Completion**
+
 ```
 User completes IVG variable generation
     ↓
@@ -1124,6 +1173,7 @@ User approves all 9 variables (PS, OF, BR, CS, VE, EA, AL, CTA-R, SCR)
 ```
 
 **Step 2: MMAA Handoff**
+
 ```
 System displays transition message:
 
@@ -1138,6 +1188,7 @@ To proceed, please provide:
 ```
 
 **Step 3: MMAA Analysis** (<10 seconds)
+
 ```
 System calculates and displays:
 
@@ -1155,6 +1206,7 @@ Status: CAUTION ⚠️
 ```
 
 **Step 4: User Decision**
+
 ```
 Options presented:
 [✓ Proceed with campaign] - If GO or user accepts CAUTION
@@ -1170,6 +1222,7 @@ Options presented:
 #### IVG → MMAA Inputs
 
 **From Campaign Definition Sheet**:
+
 ```json
 {
   "campaign_definition_id": 12345,
@@ -1211,7 +1264,7 @@ Options presented:
     "purchase_frequency": 4,
     "margin": 0.75
   },
-  "safety_margin": 0.40
+  "safety_margin": 0.4
 }
 ```
 
@@ -1276,6 +1329,7 @@ While MMAA is a separate post-generation step, **Phase 5 could be enhanced** to 
 ```
 
 **Benefits**:
+
 - Users think about economics during variable selection (not after)
 - Reduces surprise rejections at MMAA gate
 - Educates users on stage-CPA relationships
@@ -1321,16 +1375,19 @@ While MMAA is a separate post-generation step, **Phase 5 could be enhanced** to 
 ### Economic Analysis Layer (MMAA)
 
 **LTV Calculation Engine**:
+
 - **Language**: Python 3.11+
 - **Libraries**: NumPy for financial calculations, Pandas for cohort analysis
 - **Methods**: Cohort Projection, First-Year Proxy, Industry Benchmark lookup
 
 **Viability Decision Engine**:
+
 - **Rule Engine**: Python with hard-coded decision matrix (GO/CAUTION/NO-GO thresholds)
 - **LLM Reasoning**: Claude Opus 4.6 (Anthropic) for nuanced viability synthesis
 - **Response Time**: <3 seconds for calculation + <10 seconds for LLM reasoning
 
 **Industry Benchmark Database**:
+
 - **Storage**: PostgreSQL table `industry_benchmarks`
 - **Schema**:
   ```sql
@@ -1348,6 +1405,7 @@ While MMAA is a separate post-generation step, **Phase 5 could be enhanced** to 
 - **Data Source**: Aggregated from File 19 (Competitive Density) + industry reports + historical campaign data
 
 **Integration API**:
+
 - **Framework**: FastAPI endpoint `/api/v1/mmaa/pre-launch-viability`
 - **Authentication**: Shared JWT with IVG system
 - **Method**: POST with Campaign Definition Sheet + LTV inputs
@@ -1357,6 +1415,7 @@ While MMAA is a separate post-generation step, **Phase 5 could be enhanced** to 
 ---
 
 ### Core Infrastructure
+
 - **Language**: Python 3.11+
 - **Orchestration**: Apache Airflow or Prefect
 - **Database**: PostgreSQL for research, variables, evidence
@@ -1364,12 +1423,14 @@ While MMAA is a separate post-generation step, **Phase 5 could be enhanced** to 
 - **Caching**: Redis for API call caching
 
 ### LLM Layer
+
 - **Primary Reasoning**: Claude Opus 4.6 (Anthropic) - best reasoning for complex variables
 - **Fast Analysis**: Claude Sonnet 4.5 (Anthropic) - research synthesis
 - **Multimodal**: GPT-4o (OpenAI) - analyze existing ads/images
 - **Embedding**: text-embedding-3-large (OpenAI) or Voyage AI
 
 ### Research Tools
+
 - **Web Scraping**: Firecrawl API, Apify, or custom Playwright
 - **Meta Ad Library**: Official Meta Ad Library API
 - **Web Research**: Perplexity API, Exa.ai, or Tavily AI
@@ -1378,11 +1439,13 @@ While MMAA is a separate post-generation step, **Phase 5 could be enhanced** to 
 - **Website Analysis**: Custom crawler + Beautiful Soup
 
 ### Validation Layer
+
 - **Framework Rules**: Custom Python validation library
 - **Linguistic Analysis**: Spacy/NLTK (check psychological vs behavioral language)
 - **ML Classifier**: Fine-tuned model for PS/OF compliance detection
 
 ### User Interface
+
 - **Web UI**: Next.js + React + Tailwind CSS
 - **Backend API**: FastAPI (Python)
 - **Real-time**: WebSocket for progress tracking
@@ -1455,9 +1518,11 @@ Campaign Launch (if approved)
 ## Implementation Phases
 
 ### Phase 1: MVP (8-10 weeks)
+
 **Core system with manual research assistance**
 
 **Components**:
+
 1. Input interface (simple web form)
 2. Company Research Agent (web scraping + LLM)
 3. Variable Generation Engine (all 9 generators)
@@ -1468,9 +1533,11 @@ Campaign Launch (if approved)
 **Research**: Semi-automated (tool suggests, user provides inputs)
 
 ### Phase 2: Enhanced Research (4-6 weeks)
+
 **Fully automated research**
 
 **Add**:
+
 1. Industry Research Agent
 2. Competitor Research Agent (Meta Ad Library)
 3. Audience Research Agent (Reddit/Quora)
@@ -1478,9 +1545,11 @@ Campaign Launch (if approved)
 5. Evidence tracking
 
 ### Phase 3: Advanced Interaction (4-6 weeks)
+
 **Sophisticated user interaction**
 
 **Add**:
+
 1. Alternative generation (2-3 options per variable)
 2. Interactive refinement with feedback loop
 3. Progress tracking UI
@@ -1488,9 +1557,11 @@ Campaign Launch (if approved)
 5. Confidence scoring
 
 ### Phase 4: Intelligence Layer (6-8 weeks)
+
 **Learning and improvement**
 
 **Add**:
+
 1. Historical campaign performance integration
 2. A/B testing of variable definitions
 3. Success pattern recognition
@@ -1499,9 +1570,11 @@ Campaign Launch (if approved)
 6. Active learning from user feedback
 
 ### Phase 5: Integration & Scale (4-6 weeks)
+
 **Production-ready**
 
 **Add**:
+
 1. Meta Ads Manager integration
 2. JSON export
 3. API for programmatic access
@@ -1514,16 +1587,19 @@ Campaign Launch (if approved)
 ## Success Metrics
 
 ### System Quality Metrics
+
 - **Framework Compliance Rate**: >95% (variables passing all validation)
 - **Cross-Variable Coherence**: >85/100
 - **Research Quality**: >80/100 average confidence
 
 ### User Experience Metrics
+
 - **Time to Complete**: <60 minutes (vs 6-8 hours manual)
 - **User Acceptance Rate**: >70% (variables accepted without modification)
 - **Refinement Iterations**: <2 iterations per variable
 
 ### Business Outcome Metrics
+
 - **Campaign Success Rate**: >80% (meet learning phase goals)
 - **Expert Review Pass Rate**: >90% (validated by GrowFu experts)
 - **Cost Savings**: 85%+ time reduction
@@ -1531,26 +1607,31 @@ Campaign Launch (if approved)
 ### MMAA Economic Viability Metrics
 
 **Viability Prediction Accuracy**:
+
 - **Target**: >80% accuracy
 - **Measurement**: % of GO/NO-GO assessments matching actual 30-day profitability
 - **Calculation**: Compare MMAA prediction vs. actual CAC < Viable Ceiling at Day 30
 
 **Unprofitable Campaign Prevention Rate**:
+
 - **Target**: >90% prevention
 - **Measurement**: % of campaigns with predicted negative ROI caught pre-launch
 - **Impact**: Estimated budget saved per prevented campaign
 
 **False Positive Rate** (NO-GO on viable campaigns):
+
 - **Target**: <15%
 - **Measurement**: % of NO-GO assessments that were incorrect (campaign would have been profitable)
 - **Impact**: Opportunity cost of rejected campaigns
 
 **User Acceptance of CAUTION Campaigns**:
+
 - **Target**: >70% proceed despite warning
 - **Measurement**: % of CAUTION campaigns user chooses to launch vs. adjust/cancel
 - **Insight**: Indicates whether CAUTION threshold is appropriately calibrated
 
 **Time to Viability Decision**:
+
 - **Target**: <5 minutes
 - **Measurement**: Time from LTV submission to GO/CAUTION/NO-GO result display
 - **Breakdown**: Calculation (<3s) + LLM reasoning (<10s) + UI rendering (<2s)
@@ -1558,16 +1639,19 @@ Campaign Launch (if approved)
 ### Combined IVG + MMAA End-to-End Metrics
 
 **End-to-End Campaign Profitability**:
+
 - **Target**: >85% of IVG-defined + MMAA-approved campaigns achieve profitability within 90 days
 - **Measurement**: Actual CAC < Viable CAC Ceiling at Day 90
 - **Impact**: Validates entire system (variable generation + economic gating)
 
 **System Efficiency (Total Time)**:
+
 - **Target**: <70 minutes total (IVG 45-60 min + MMAA 5-10 min)
 - **Measurement**: Time from initial user input to campaign launch approval
 - **Comparison**: vs. 6-8 hours manual strategic work
 
 **Economic Value Added**:
+
 - **Target**: Measurable ROI improvement from MMAA-approved campaigns
 - **Measurement**: Average LTV:CAC ratio of MMAA-approved campaigns vs. industry benchmark
 - **Expected**: >3:1 LTV:CAC ratio (vs. 2:1 industry average)
@@ -1577,6 +1661,7 @@ Campaign Launch (if approved)
 ## Example Walkthrough
 
 ### Input
+
 ```json
 {
   "company_name": "DataFlow Analytics",
@@ -1779,18 +1864,21 @@ RECOMMENDATIONS:
 ## Risk Mitigation
 
 ### Research Quality Risks
+
 - Multi-source validation (2+ sources for key claims)
 - Confidence scoring for all findings
 - Human review checkpoints for low-confidence areas
 - Source quality filtering
 
 ### LLM Hallucination Risks
+
 - Hard validation rules prevent structural violations
 - Evidence requirement: every claim cites research
 - Multi-LLM validation (cross-check with different models)
 - User review mandatory for all variables
 
 ### Framework Misinterpretation Risks
+
 - Extensive prompt engineering with framework quotes
 - Examples library of correct definitions
 - Fine-tuning on validated variable sets
@@ -1808,4 +1896,4 @@ RECOMMENDATIONS:
 
 ---
 
-*This Intelligent Variable Generator system represents a sophisticated application of AI research agents, multi-LLM reasoning, and strict validation logic to automate the complex strategic process of defining campaign variables, reducing expert-level work from 6-8 hours to 45-60 minutes while maintaining framework compliance and quality.*
+_This Intelligent Variable Generator system represents a sophisticated application of AI research agents, multi-LLM reasoning, and strict validation logic to automate the complex strategic process of defining campaign variables, reducing expert-level work from 6-8 hours to 45-60 minutes while maintaining framework compliance and quality._
