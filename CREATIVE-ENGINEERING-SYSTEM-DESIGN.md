@@ -57,6 +57,10 @@ The core design premise (the "Creative Engineering Framing"):
 
 ### Component Diagram
 
+> An editable Excalidraw version of this diagram lives at
+> [`CREATIVE-ENGINEERING-SYSTEM-ARCHITECTURE.excalidraw`](./CREATIVE-ENGINEERING-SYSTEM-ARCHITECTURE.excalidraw)
+> (open at <https://excalidraw.com> via *Open* / drag-and-drop).
+
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                              INPUTS (see §1)                               │
